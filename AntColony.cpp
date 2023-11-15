@@ -66,7 +66,7 @@ struct AntColony {
         this->bestTour = bestTour;
     }
 
-    std::vector<int> Solve(int maxIterations) {
+    std::vector<int> CalculateAOC(int maxIterations) {
         std::vector<int> globalBestTour;
         double globalBestLength = std::numeric_limits<double>::max();
 
@@ -86,7 +86,7 @@ struct AntColony {
             for (int cityIndex : bestTourOrder) {
                 std::cout << cityIndex + 1 << " - ";
             }
-            std::cout << ++bestTourOrder[0];
+            std::cout << bestTourOrder[0]+1;
             std::cout << std::endl << std::endl;
         }
         return globalBestTour;
@@ -199,7 +199,7 @@ double CalculateTourLength(const std::vector<int>& tour, const std::vector<std::
     for (size_t i = 0; i < tour.size() - 1; i++) {
         length += distances[tour[i]][tour[i + 1]];
     }
-    length += distances[tour.back()][tour[0]];  // Добавляем расстояние от последнего города к начальному
+    length += distances[tour.back()][tour[0]];  // Add the distance from the last city to the starting one
     return length;
 }
 
@@ -219,7 +219,7 @@ int main() {
     std::vector<int> bestTour;
     AntColony antColony(distances, numAnts, evaporation, alpha, beta, Q, bestTour);
 
-    std::vector<int> bestTourResult = antColony.Solve(numAnts);
+    std::vector<int> bestTourResult = antColony.CalculateAOC(numAnts);
     double bestTourLength = CalculateTourLength(bestTourResult, distances);
     return 0;
 }
